@@ -10,4 +10,4 @@ with open(os.path.join(data_dir, 'types.json')) as f:
     types = json.load(f)
 
 with open(os.path.join(data_dir, 'pokemon.json')) as f:
-    pokemon = json.load(f) 
+    pokemon = json.load(f)
