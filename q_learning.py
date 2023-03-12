@@ -70,9 +70,20 @@ class QLearning:
             pickle.dump(self.q_table, f)
 
     def load_q_table(self, file_path):
-        # Your code here
-        pass
+        full_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'AI', 'q_tables', file_path)
+        with open(full_path, 'rb') as f:
+            self.q_table = pickle.load(f)
 
     def play(self):
-        # Your code here
-        pass
+        self.game.start()
+        state = self.game.get_state()
+        while not self.game.game_over:
+            action = self.choose_action(state)
+            self.game.take_action(action)
+            next_state = self.game.get_state()
+            reward = self.game.get_reward()
+            self.update_q_table(state, action, reward, next_state)
+            state = next_state
+            if self.game.game_over:
+                self.game.start()
+                state = self.game.get_state()
