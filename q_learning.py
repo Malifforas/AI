@@ -4,16 +4,18 @@ import random
 from collections import defaultdict
 
 from game import Game
+import numpy as np
 
 
 class QLearningAgent:
-    def __init__(self, actions, learning_rate=0.1, discount_factor=0.99, epsilon=1.0, epsilon_decay=0.99, epsilon_min=0.01):
-        self.learning_rate = learning_rate
-        self.discount_factor = discount_factor
+    def __init__(self, alpha=0.5, gamma=0.99, epsilon=1.0, epsilon_decay=0.9999, min_epsilon=0.01, actions=None):
+        self.alpha = alpha
+        self.gamma = gamma
         self.epsilon = epsilon
         self.epsilon_decay = epsilon_decay
-        self.epsilon_min = epsilon_min
-        self.actions = actions
+        self.min_epsilon = min_epsilon
+        self.q_table = defaultdict(lambda: np.zeros(len(actions))) if actions is not None else {}
+        self.actions = actions or []
         self.q_table = defaultdict(lambda: [0.0] * len(self.actions))
 
     def choose_action(self, state):

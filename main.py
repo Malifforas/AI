@@ -1,16 +1,22 @@
-# This is a sample Python script.
+from q_learning import QLearningAgent
+from emulator_interaction import EmulatorInteraction
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main():
+    # Create emulator interaction object
+    emu_int = EmulatorInteraction()
 
+    # Create Q-learning agent object
+    actions = ['LEFT', 'RIGHT', 'UP', 'DOWN', 'A', 'B', 'SELECT', 'START']
+    q_agent = QLearningAgent(actions)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    # Start the emulator
+    emu_int.start_emulator()
 
+    # Play the game with the Q-learning agent
+    while True:
+        state = emu_int.get_state()
+        action = q_agent.get_action(state)
+        emu_int.take_action(action)
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
