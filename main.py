@@ -1,22 +1,13 @@
-from q_learning import QLearningAgent
-from emulator_interaction import EmulatorInteraction
+from game import Game
+from q_learning import QLearning
 
 def main():
-    # Create emulator interaction object
-    emu_int = EmulatorInteraction()
-
-    # Create Q-learning agent object
-    actions = ['LEFT', 'RIGHT', 'UP', 'DOWN', 'A', 'B', 'SELECT', 'START']
-    q_agent = QLearningAgent(actions)
-
-    # Start the emulator
-    emu_int.start_emulator()
-
-    # Play the game with the Q-learning agent
-    while True:
-        state = emu_int.get_state()
-        action = q_agent.get_action(state)
-        emu_int.take_action(action)
+    rom_path = "C:/Users/Blizzard/Desktop/AI/Pokemon - HeartGold Version (USA).nds"
+    game = Game(rom_path)
+    q_learning = QLearning(game)
+    q_learning.train()
+    q_learning.save_q_table('q_table.pkl')
+    q_learning.play()
 
 if __name__ == '__main__':
     main()

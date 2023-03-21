@@ -7,6 +7,7 @@ from game import Game
 import numpy as np
 
 
+
 class QLearningAgent:
     def __init__(self, alpha=0.5, gamma=0.99, epsilon=1.0, epsilon_decay=0.9999, min_epsilon=0.01, actions=None):
         self.alpha = alpha
@@ -42,14 +43,15 @@ class QLearningAgent:
         self.epsilon = max(self.epsilon * self.epsilon_decay, self.epsilon_min)
 
     def save_q_table(self, file_path):
-        full_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'AI', 'pokegold-master', file_path)
+        full_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'AI', 'qtable', file_path)
         with open(full_path, 'wb') as f:
             pickle.dump(dict(self.q_table), f)
 
     def load_q_table(self, file_path):
-        full_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'AI', 'q_tables', file_path)
+        full_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'AI', 'qtable', file_path)
         with open(full_path, 'rb') as f:
             self.q_table = defaultdict(lambda: [0.0] * len(self.actions), pickle.load(f))
+
 
 
 class QLearning:
@@ -82,7 +84,6 @@ class QLearning:
             action = self.agent.choose_action(state)
             self.game.take_action(action)
             state = self.game.get_state()
-
     def save_q_table(self, file_path):
         self.agent.save_q_table(file_path)
 

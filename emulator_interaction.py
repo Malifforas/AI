@@ -1,10 +1,12 @@
 import time
 import pyautogui
 
+
 def press_key(key):
     pyautogui.keyDown(key)
     time.sleep(0.05)
     pyautogui.keyUp(key)
+
 
 class EmulatorInteraction:
     def __init__(self):
